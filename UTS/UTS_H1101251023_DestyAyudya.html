@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <tittle>Timer Pomodoro</tittle>
+    </head>
+
+    <style>
+        body {
+            font-family: Helvetica, sans-serif;
+            text-align: center;
+        }
+        header {
+            padding: 20px;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        #timer {
+            font-size: 60px;
+            font-weight: bold;
+        
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+        }
+
+        .warning {
+             color: #e0218a;
+            }
+
+    </style>
+
+<body>
+
+    <header>
+        <h1>Timer Pomodoro</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Waktu Fokus</h2>
+            <div id="timer">
+                25:00
+            </div>
+
+            <div>
+                <button id="startButton">Mulai</button>
+                <button id="pauseButton">Jeda</button>
+                <button id="resetButton">Reset</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Timer Pomodoro</p>
+    </footer>
+    <script>
+    const timer = document.getElementById ("timer")
+    const pauseButton = document.getElementById ("pauseButton")
+    const startButton = document.getElementById ("startButton")
+    const resetButton = document.getElementById ("resetButton")
+
+    let waktu = 25 * 60 //waktu
+    let interval;
+
+    function tampilkanWaktu() {    //tampilan wakty
+
+            let menit = Math.floor(waktu / 60);
+            let detik = waktu % 60;
+
+            if (detik < 10) {
+                detik = "0" + detik;
+            }
+
+            timer.textContent = menit + ":" + detik;
+        }
+
+    startButton.addEventListener("click", function () { //tombol mulai
+
+            interval = setInterval(function () {
+
+                waktu--;
+                tampilkanWaktu();
+
+                if (waktu < 300) {
+                    timer.classList.add("warning");
+                }
+                if (waktu <= 0) {
+                    clearInterval(interval);
+                    alert("Waktu habis!");
+                }
+
+            }, 1000);
+        });
+    
+     pauseButton.addEventListener("click", function () {  //tombol pause
+            clearInterval(interval);
+        });
+
+    resetButton.addEventListener("click", function () { //reset
+            clearInterval(interval);
+            waktu = 25 * 60;
+            tampilkanWaktu();
+        });
+    </script>
+
+</body>
+</html>
